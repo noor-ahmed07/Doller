@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Currency Converter | USD to BDT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gradient: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
+            --gradient-dark: linear-gradient(135deg, #4f46e5, #7c3aed, #c026d3);
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--dark);
+            flex-direction: column;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            perspective: 1000px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px) rotateX(2deg);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--gradient);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .logo i {
+            font-size: 30px;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            color: var(--gray);
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+        }
+        
+        .input-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .input-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient);
+        }
+        
+        .input-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .input-header i {
+            width: 40px;
+            height: 40px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: var(--primary);
+            font-size: 18px;
+        }
+        
+        .input-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 18px;
+        }
+        
+        input[type="number"] {
+            width: 100%;
+            padding: 16px 16px 16px 50px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s;
+            background: #f8fafc;
+            color: var(--dark);
+        }
+        
+        input[type="number"]:focus {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            outline: none;
+        }
+        
+        .currency-symbol {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .slider-container {
+            margin-top: 16px;
+        }
+        
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: #e2e8f0;
+            border-radius: 10px;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 10px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        button:hover::before {
+            left: 100%;
+        }
+        
+        .calculate-btn {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+        
+        .calculate-btn:hover {
+            background: var(--gradient-dark);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+            transform: translateY(-3px);
+        }
+        
+        .reset-btn {
+            background: #f1f5f9;
+            color: var(--gray);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .reset-btn:hover {
+            background: #e2e8f0;
+            transform: translateY(-3px);
+        }
+        
+        .clear-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        
+        .clear-btn:hover {
+            background: rgba(239, 68, 68, 0.15);
+            transform: translateY(-3px);
+        }
+        
+        button i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        .result-section {
+            margin-top: 30px;
+        }
+        
+        .result-card {
+            background: var(--gradient);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+        
+        .result-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+        
+        .result-card h3 {
+            margin-bottom: 16px;
+            font-size: 18px;
+            font-weight: 500;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .result-value {
+            font-size: 48px;
+            font-weight: 700;
+            margin: 20px 0;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .details {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .exchange-rate {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 15px;
+            color: var(--gray);
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .exchange-rate i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--gradient);
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .decoration-1 {
+            width: 120px;
+            height: 120px;
+            top: -40px;
+            right: -40px;
+        }
+        
+        .decoration-2 {
+            width: 80px;
+            height: 80px;
+            bottom: -20px;
+            left: -20px;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 50%;
+            animation: floatAround 15s linear infinite;
+        }
+        
+        @keyframes floatAround {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(20px, 40px) rotate(90deg); }
+            50% { transform: translate(40px, 0) rotate(180deg); }
+            75% { transform: translate(20px, -40px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        
+        .floating-element:nth-child(1) {
+            width: 40px;
+            height: 40px;
+            top: 10%;
+            left: 10%;
+            animation-duration: 20s;
+        }
+        
+        .floating-element:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: 70%;
+            left: 80%;
+            animation-duration: 25s;
+            animation-direction: reverse;
+        }
+        
+        .floating-element:nth-child(3) {
+            width: 30px;
+            height: 30px;
+            top: 40%;
+            left: 85%;
+            animation-duration: 18s;
+        }
+        
+        .history-section {
+            margin-top: 30px;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .history-title {
+            display: flex;
+            align-items: center;
+        }
+        
+        .history-title i {
+            width: 40px;
+            height: 40px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: var(--primary);
+            font-size: 18px;
+        }
+        
+        .history-title h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .history-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .history-btn {
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .clear-history-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        
+        .clear-history-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+        
+        .export-history-btn {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--secondary);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        .export-history-btn:hover {
+            background: rgba(16, 185, 129, 0.2);
+        }
+        
+        .history-list {
+            max-height: 150px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #f1f5f9;
+        }
+        
+        .history-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .history-list::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        
+        .history-list::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            transition: all 0.3s;
+        }
+        
+        .history-item:hover {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 0 -12px;
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .history-details {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .history-amount {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .history-rate {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+        
+        .history-result {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .history-value {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .history-time {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+        
+        .empty-history {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray);
+        }
+        
+        .empty-history i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+        
+        .empty-history p {
+            font-size: 14px;
+        }
+        
+        /* Footer Styles */
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            font-size: 14px;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .footer a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .footer a:hover {
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        
+        .credit {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .credit span {
+            font-weight: 700;
+            background: linear-gradient(90deg, #ffd700, #ffed4e, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .creator {
+            margin-top: 8px;
+            font-size: 13px;
+            opacity: 0.8;
+        }
+        
+        .hidden-links {
+            display: none;
+        }
+        
+        @media (max-width: 480px) {
+            .card {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            .result-value {
+                font-size: 36px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .history-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            
+            .history-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .footer {
+                padding: 15px;
+            }
+            
+            .credit {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="floating-elements">
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+            </div>
+            
+            <div class="decoration decoration-1"></div>
+            <div class="decoration decoration-2"></div>
+            
+            <div class="header">
+                <div class="logo">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <h1>Currency Converter</h1>
+                <p class="subtitle">Convert USD to Bangladeshi Taka in real-time</p>
+            </div>
+            
+            <div class="input-section">
+                <div class="input-card">
+                    <div class="input-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Exchange Rate</h3>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-with-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                            <input type="number" id="exchangeRate" value="125" min="1" step="0.01">
+                            <span class="currency-symbol">BDT per USD</span>
+                        </div>
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Lower</span>
+                                <span>Higher</span>
+                            </div>
+                            <input type="range" id="rateSlider" min="50" max="200" value="125" step="1">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-card">
+                    <div class="input-header">
+                        <i class="fas fa-calculator"></i>
+                        <h3>Dollar Amount</h3>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-with-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                            <input type="number" id="dollarAmount" value="0.71" min="0" step="0.01">
+                            <span class="currency-symbol">USD</span>
+                        </div>
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>0 USD</span>
+                                <span>10 USD</span>
+                            </div>
+                            <input type="range" id="amountSlider" min="0" max="10" value="0.71" step="0.01">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="calculate-btn" onclick="calculate()">
+                    <i class="fas fa-calculator"></i> Calculate
+                </button>
+                <button class="reset-btn" onclick="resetForm()">
+                    <i class="fas fa-redo"></i> Reset
+                </button>
+                <button class="clear-btn" onclick="clearHistory()">
+                    <i class="fas fa-trash"></i> Clear History
+                </button>
+            </div>
+            
+            <div class="result-section">
+                <div class="result-card">
+                    <h3>CONVERSION RESULT</h3>
+                    <div class="result-value" id="resultValue">88.75 BDT</div>
+                    <div class="details" id="resultDetails">0.71 USD at 125 BDT per dollar</div>
+                </div>
+            </div>
+            
+            <div class="exchange-rate">
+                <i class="fas fa-info-circle"></i>
+                Current rate: <strong><span id="currentRate">125</span> BDT</strong> = 1 USD
+            </div>
+            
+            <div class="history-section">
+                <div class="history-header">
+                    <div class="history-title">
+                        <i class="fas fa-history"></i>
+                        <h3>Conversion History</h3>
+                    </div>
+                    <div class="history-actions">
+                        <button class="history-btn export-history-btn" onclick="exportHistory()">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                        <button class="history-btn clear-history-btn" onclick="clearHistory()">
+                            <i class="fas fa-trash"></i> Clear All
+                        </button>
+                    </div>
+                </div>
+                <div class="history-list" id="historyList">
+                    <!-- History items will be added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="credit">
+            BY <span>𝙉𝙊𝙊𝙍 • 𝙏𝙀𝘾𝙃 • 𝙒𝙊𝙍𝙇𝘿 ツ</span>
+        </div>
+        <div class="creator">
+            CREATOR <span>মাহাবুব 𝙈𝙖𝙧𝙪𝙛ツ</span>
+        </div>
+        
+        <!-- Hidden links for reference only -->
+        <div class="hidden-links">
+            https://t.me/NOOR_TECH_WORLD
+            https://t.me/MAHABUB_MARUF
+        </div>
+    </div>
+
+    <script>
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load history from localStorage if available
+            const savedHistory = localStorage.getItem('conversionHistory');
+            if (savedHistory) {
+                conversionHistory = JSON.parse(savedHistory);
+            }
+            
+            calculate();
+            updateHistory();
+            
+            // Update when exchange rate changes
+            document.getElementById('exchangeRate').addEventListener('input', function() {
+                document.getElementById('rateSlider').value = this.value;
+                document.getElementById('currentRate').textContent = this.value;
+                calculate();
+            });
+            
+            // Update when rate slider changes
+            document.getElementById('rateSlider').addEventListener('input', function() {
+                document.getElementById('exchangeRate').value = this.value;
+                document.getElementById('currentRate').textContent = this.value;
+                calculate();
+            });
+            
+            // Update when dollar amount changes
+            document.getElementById('dollarAmount').addEventListener('input', function() {
+                document.getElementById('amountSlider').value = this.value;
+                calculate();
+            });
+            
+            // Update when amount slider changes
+            document.getElementById('amountSlider').addEventListener('input', function() {
+                document.getElementById('dollarAmount').value = this.value;
+                calculate();
+            });
+        });
+        
+        let conversionHistory = [];
+        
+        function calculate() {
+            const exchangeRate = parseFloat(document.getElementById('exchangeRate').value);
+            const dollarAmount = parseFloat(document.getElementById('dollarAmount').value);
+            
+            if (isNaN(exchangeRate) || isNaN(dollarAmount)) {
+                document.getElementById('resultValue').textContent = 'Invalid input';
+                document.getElementById('resultDetails').textContent = 'Please enter valid numbers';
+                return;
+            }
+            
+            const result = exchangeRate * dollarAmount;
+            document.getElementById('resultValue').textContent = result.toFixed(2) + ' BDT';
+            document.getElementById('resultDetails').textContent = 
+                `${dollarAmount} USD at ${exchangeRate} BDT per dollar`;
+                
+            // Add to history
+            if (dollarAmount > 0) {
+                const historyItem = {
+                    amount: dollarAmount,
+                    rate: exchangeRate,
+                    result: result,
+                    timestamp: new Date().toISOString()
+                };
+                
+                conversionHistory.unshift(historyItem);
+                if (conversionHistory.length > 10) {
+                    conversionHistory.pop();
+                }
+                
+                // Save to localStorage
+                localStorage.setItem('conversionHistory', JSON.stringify(conversionHistory));
+                
+                updateHistory();
+            }
+        }
+        
+        function updateHistory() {
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+            
+            if (conversionHistory.length === 0) {
+                const emptyMessage = document.createElement('div');
+                emptyMessage.className = 'empty-history';
+                emptyMessage.innerHTML = `
+                    <i class="fas fa-history"></i>
+                    <p>No conversion history yet</p>
+                `;
+                historyList.appendChild(emptyMessage);
+                return;
+            }
+            
+            conversionHistory.forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                
+                const date = new Date(item.timestamp);
+                const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                historyItem.innerHTML = `
+                    <div class="history-details">
+                        <span class="history-amount">${item.amount} USD</span>
+                        <span class="history-rate">Rate: ${item.rate} BDT</span>
+                    </div>
+                    <div class="history-result">
+                        <span class="history-value">${item.result.toFixed(2)} BDT</span>
+                        <span class="history-time">${timeString}</span>
+                    </div>
+                `;
+                historyList.appendChild(historyItem);
+            });
+        }
+        
+        function clearHistory() {
+            if (conversionHistory.length === 0) {
+                return;
+            }
+            
+            if (confirm('Are you sure you want to clear all conversion history?')) {
+                conversionHistory = [];
+                localStorage.removeItem('conversionHistory');
+                updateHistory();
+                
+                // Show confirmation message
+                showNotification('History cleared successfully', 'success');
+            }
+        }
+        
+        function exportHistory() {
+            if (conversionHistory.length === 0) {
+                showNotification('No history to export', 'warning');
+                return;
+            }
+            
+            let csvContent = "Date,Time,Amount (USD),Rate (BDT),Result (BDT)\n";
+            
+            conversionHistory.forEach(item => {
+                const date = new Date(item.timestamp);
+                const dateString = date.toLocaleDateString();
+                const timeString = date.toLocaleTimeString();
+                
+                csvContent += `"${dateString}","${timeString}","${item.amount}","${item.rate}","${item.result.toFixed(2)}"\n`;
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'conversion-history.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('History exported successfully', 'success');
+        }
+        
+        function resetForm() {
+            document.getElementById('exchangeRate').value = 125;
+            document.getElementById('dollarAmount').value = 0.71;
+            document.getElementById('rateSlider').value = 125;
+            document.getElementById('amountSlider').value = 0.71;
+            document.getElementById('currentRate').textContent = 125;
+            calculate();
+        }
+        
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 16px 20px;
+                border-radius: 12px;
+                color: white;
+                font-weight: 500;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+                transform: translateX(150%);
+                transition: transform 0.3s ease;
+                max-width: 300px;
+            `;
+            
+            if (type === 'success') {
+                notification.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            } else if (type === 'warning') {
+                notification.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+            } else {
+                notification.style.background = 'var(--gradient)';
+            }
+            
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Animate out after 3 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateX(150%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
