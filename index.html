@@ -32,18 +32,22 @@
             background: linear-gradient(135deg, #0f172a, #1e293b);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 20px;
             color: var(--dark);
-            flex-direction: column;
+            position: relative;
         }
         
         .container {
             width: 100%;
             max-width: 500px;
             perspective: 1000px;
-            margin-bottom: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
         .card {
@@ -56,6 +60,7 @@
             overflow: hidden;
             transform-style: preserve-3d;
             transition: transform 0.6s ease;
+            margin-bottom: 20px;
         }
         
         .card:hover {
@@ -642,60 +647,161 @@
             font-size: 14px;
         }
         
-        /* Footer Styles */
+        /* Stylish Footer Styles */
         .footer {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.7);
-            padding: 20px;
-            font-size: 14px;
             width: 100%;
             max-width: 500px;
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .footer-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .footer-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .footer-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+        
+        .footer-content:hover::before {
+            left: 100%;
+        }
+        
+        .credit-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .creator-text {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
         .footer a {
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.95);
             text-decoration: none;
-            transition: all 0.3s ease;
-            font-weight: 600;
+            transition: all 0.3s;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
         
         .footer a:hover {
             color: white;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-        
-        .credit {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 12px 20px;
-            border-radius: 50px;
-            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .credit span {
-            font-weight: 700;
-            background: linear-gradient(90deg, #ffd700, #ffed4e, #ffd700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 200% 100%;
-            animation: shimmer 2s infinite;
+        .footer i {
+            font-size: 16px;
+            transition: transform 0.3s;
         }
         
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
+        .footer a:hover i {
+            transform: scale(1.2);
         }
         
-        .creator {
-            margin-top: 8px;
-            font-size: 13px;
-            opacity: 0.8;
+        .footer-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 20px;
+            z-index: -1;
         }
         
-        .hidden-links {
-            display: none;
+        .footer-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: footerFloat 8s linear infinite;
+        }
+        
+        .footer-dot:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .footer-dot:nth-child(2) {
+            top: 60%;
+            left: 80%;
+            animation-delay: 1s;
+        }
+        
+        .footer-dot:nth-child(3) {
+            top: 40%;
+            left: 40%;
+            animation-delay: 2s;
+        }
+        
+        .footer-dot:nth-child(4) {
+            top: 80%;
+            left: 30%;
+            animation-delay: 3s;
+        }
+        
+        @keyframes footerFloat {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translateY(-10px) translateX(5px);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-5px) translateX(10px);
+                opacity: 0.8;
+            }
+            75% {
+                transform: translateY(-15px) translateX(5px);
+                opacity: 0.6;
+            }
         }
         
         @media (max-width: 480px) {
@@ -727,12 +833,16 @@
             }
             
             .footer {
-                padding: 15px;
+                padding: 0 10px;
             }
             
-            .credit {
-                padding: 10px 16px;
-                font-size: 13px;
+            .footer-content {
+                padding: 16px;
+            }
+            
+            .credit-text, .creator-text {
+                flex-direction: column;
+                gap: 5px;
             }
         }
     </style>
@@ -846,20 +956,30 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="footer">
-        <div class="credit">
-            BY <span>𝙉𝙊𝙊𝙍 • 𝙏𝙀𝘾𝙃 • 𝙒𝙊𝙍𝙇𝘿 ツ</span>
-        </div>
-        <div class="creator">
-            CREATOR <span>মাহাবুব 𝙈𝙖𝙧𝙪𝙛ツ</span>
-        </div>
         
-        <!-- Hidden links for reference only -->
-        <div class="hidden-links">
-            https://t.me/NOOR_TECH_WORLD
-            https://t.me/MAHABUB_MARUF
+        <!-- Stylish Footer Section -->
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-decoration">
+                    <div class="footer-dot"></div>
+                    <div class="footer-dot"></div>
+                    <div class="footer-dot"></div>
+                    <div class="footer-dot"></div>
+                </div>
+                
+                <p class="credit-text">
+                    <span>Powered By</span>
+                    <a href="https://t.me/NOOR_TECH_WORLD" target="_blank">
+                        <i class="fab fa-telegram"></i> 𝙉𝙊𝙊𝙍 • 𝙏𝙀𝘾𝙃 • 𝙒𝙊𝙍𝙇𝘿 ツ
+                    </a>
+                </p>
+                <p class="creator-text">
+                    <span>Developed By</span>
+                    <a href="https://t.me/MAHABUB_MARUF" target="_blank">
+                        <i class="fab fa-telegram"></i> মাহাবুব 𝙈𝙖𝙧𝙪𝙛ツ
+                    </a>
+                </p>
+            </div>
         </div>
     </div>
 
