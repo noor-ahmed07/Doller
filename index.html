@@ -224,43 +224,6 @@
             font-size: 18px;
         }
         
-        .slider-container {
-            margin-top: 16px;
-        }
-        
-        .slider-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: var(--gray);
-        }
-        
-        input[type="range"] {
-            width: 100%;
-            height: 8px;
-            -webkit-appearance: none;
-            background: #e2e8f0;
-            border-radius: 10px;
-            outline: none;
-        }
-        
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 24px;
-            height: 24px;
-            background: var(--primary);
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
-            transition: all 0.3s;
-        }
-        
-        input[type="range"]::-webkit-slider-thumb:hover {
-            background: var(--primary-dark);
-            transform: scale(1.1);
-        }
-        
         .button-group {
             display: flex;
             gap: 16px;
@@ -879,13 +842,6 @@
                             <input type="number" id="exchangeRate" value="125" min="1" step="0.01">
                             <span class="currency-symbol">BDT per USD</span>
                         </div>
-                        <div class="slider-container">
-                            <div class="slider-label">
-                                <span>Lower</span>
-                                <span>Higher</span>
-                            </div>
-                            <input type="range" id="rateSlider" min="50" max="200" value="125" step="1">
-                        </div>
                     </div>
                 </div>
                 
@@ -899,13 +855,6 @@
                             <i class="fas fa-dollar-sign"></i>
                             <input type="number" id="dollarAmount" value="0.71" min="0" step="0.01">
                             <span class="currency-symbol">USD</span>
-                        </div>
-                        <div class="slider-container">
-                            <div class="slider-label">
-                                <span>0 USD</span>
-                                <span>10 USD</span>
-                            </div>
-                            <input type="range" id="amountSlider" min="0" max="10" value="0.71" step="0.01">
                         </div>
                     </div>
                 </div>
@@ -997,27 +946,12 @@
             
             // Update when exchange rate changes
             document.getElementById('exchangeRate').addEventListener('input', function() {
-                document.getElementById('rateSlider').value = this.value;
-                document.getElementById('currentRate').textContent = this.value;
-                calculate();
-            });
-            
-            // Update when rate slider changes
-            document.getElementById('rateSlider').addEventListener('input', function() {
-                document.getElementById('exchangeRate').value = this.value;
                 document.getElementById('currentRate').textContent = this.value;
                 calculate();
             });
             
             // Update when dollar amount changes
             document.getElementById('dollarAmount').addEventListener('input', function() {
-                document.getElementById('amountSlider').value = this.value;
-                calculate();
-            });
-            
-            // Update when amount slider changes
-            document.getElementById('amountSlider').addEventListener('input', function() {
-                document.getElementById('dollarAmount').value = this.value;
                 calculate();
             });
         });
@@ -1143,8 +1077,6 @@
         function resetForm() {
             document.getElementById('exchangeRate').value = 125;
             document.getElementById('dollarAmount').value = 0.71;
-            document.getElementById('rateSlider').value = 125;
-            document.getElementById('amountSlider').value = 0.71;
             document.getElementById('currentRate').textContent = 125;
             calculate();
         }
@@ -1199,4 +1131,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
